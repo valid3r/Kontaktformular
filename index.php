@@ -23,6 +23,16 @@
       crossorigin="anonymous"
     />
 
+  
+    <script
+      src="/js/main.js"
+    ></script>
+
+    <script
+    type="text/javascript"
+    src="https://code.jquery.com/jquery-1.11.3.min.js"
+  ></script>
+
     <title>PHP Kontakt Formular</title>
   </head>
   <body>
@@ -52,6 +62,14 @@
           </div>
         </div>
       </div>
+
+
+
+
+
+
+
+
 
 
     <script
