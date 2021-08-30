@@ -1,6 +1,5 @@
 
 
-<?php include 'sendmail.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
