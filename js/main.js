@@ -71,3 +71,76 @@ function submitData(form, e) {
 
   sendEmail(data)
 }
+
+function deleteContact(id) {
+  console.log('Inside delete')
+  var request = new XMLHttpRequest()
+
+  request.open('POST', 'Controller.php', true)
+
+  request.setRequestHeader(
+    'Content-Type',
+    'application/x-www-form-urlencoded; charset=UTF-8',
+  )
+
+  var data = {
+    action: 'delete',
+    id: id,
+  }
+
+  data = JSON.stringify(data)
+
+  request.send(data)
+
+  window.location.href = '/emails.php'
+}
+
+function deleteOlderThan2Weeks() {
+  console.log('Delete Older than 2 weeks')
+
+  var request = new XMLHttpRequest()
+
+  request.open('POST', 'Controller.php', true)
+
+  request.setRequestHeader(
+    'Content-Type',
+    'application/x-www-form-urlencoded; charset=UTF-8',
+  )
+
+  var data = {
+    action: 'deleteOlderThan2Weeks',
+  }
+
+  data = JSON.stringify(data)
+
+  request.send(data)
+
+  window.location.href = '/emails.php'
+}
+
+function getContactInfo(id) {
+  console.log('getContactInfo')
+
+  var request = new XMLHttpRequest()
+
+  request.open('POST', 'Controller.php', true)
+
+  request.setRequestHeader(
+    'Content-Type',
+    'application/x-www-form-urlencoded; charset=UTF-8',
+  )
+
+  var data = {
+    action: 'getContactInfo',
+    id: id,
+  }
+
+  data = JSON.stringify(data)
+
+  request.send(data)
+
+  response = request.responseText
+  console.log(response)
+
+  //window.location.href = '/emails.php'
+}

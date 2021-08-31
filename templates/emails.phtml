@@ -3,18 +3,115 @@
               <form class="row g-3">
 
 
-
+              <div class="row">
+                  
+                    <div class="col">  <h6>EMAILS</h6></div>
+                    
+                    <div class="col">
+                        <button type="button" style="float:right" onclick="deleteOlderThan2Weeks()"  class="btn btn-warning">Delete Older Than 2 Weeks</button>
+                    </div>
+              </div>
+           
               
-              <h6>EMAILS</h6>
+          
+              
               <hr> 
               <div class="col-md-12">
-                  
+                  <div class="table-responsive">
 
-              Gespeicherte emails anzeigen
+                  <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Vorname</th>
+                <th scope="col">Nachname</th>
+                
+                <th scope="col">To</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Date Send</th>
+                <th scope="col">...</th>
+                </tr>
+            </thead>
 
 
+        <tbody>
+
+        <?php
+        ini_set('display_errors', '1');
+        ini_set('display_startup_errors', '1');
+        error_reporting(E_ALL);
+
+        require_once 'models/KontaktModel.php';
+
+        $model = new KontaktModel();
+
+        $data = $model->getAll();
+
+        foreach ($data as $row) {
+            echo "           <tr>\n";
+            echo '            <td class="align-middle">' .
+                $row['id'] .
+                "</td>\n";
+            echo '            <td class="align-middle">' .
+                $row['vorname'] .
+                "</td>\n";
+            echo '            <td class="align-middle">' .
+                $row['nachname'] .
+                "</td>\n";
+            //echo '            <td>' . $row['from_email'] . "</td>\n";
+            echo '            <td class="align-middle">' .
+                $row['to_email'] .
+                "</td>\n";
+            echo '            <td class="align-middle">' .
+                $row['email_subject'] .
+                "</td>\n";
+            //echo '            <td>' . $row['email_message'] . "</td>\n";
+            echo '            <td class="align-middle" style="width:100px">' .
+                date('d.m.Y', strtotime($row['date_created'])) .
+                "</td>\n";
+
+            echo '            <td class="align-middle"> 
+            <button type="button" class="btn btn-primary" onclick="getContactInfo(' .
+                $row['id'] .
+                ')" >Show</button>
+            <button type="button" class="btn btn-danger" onclick="deleteContact(' .
+                $row['id'] .
+                ')" >Delete</button>' .
+                "</td>\n";
+            echo '          </tr>';
+        }
+        ?>
+
+
+    </tbody>
+    </table>
+    </div>
+
+
+
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Kontakt Info</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="info-content">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
               
-              
-             </div>
+</div>
 
 

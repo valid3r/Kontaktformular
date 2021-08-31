@@ -1,8 +1,8 @@
 <?php
 
-// ini_set('display_errors', '1');
-// ini_set('display_startup_errors', '1');
-// error_reporting(E_ALL);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 
 // Import PHPMailer classes into the global namespace
 use PHPMailer\PHPMailer\PHPMailer;
@@ -11,6 +11,7 @@ use PHPMailer\PHPMailer\Exception;
 
 // Load Composer's autoloader
 require 'vendor/autoload.php';
+require_once 'models/KontaktModel.php';
 
 if (file_get_contents('php://input')) {
     // get the raw POST data
@@ -22,7 +23,25 @@ if (file_get_contents('php://input')) {
     // Instantiation and passing `true` enables exceptions
     $mail = new PHPMailer(true);
 
+    // Database
+
+    $kontakt = new KontaktModel();
+
+    $dateSent = new DateTime();
+
     try {
+        // Database insert
+        $kontakt->insert(
+            $data->vorname,
+            $data->nachname,
+            // from
+            $data->email,
+            $data->toEmail,
+            $data->subject,
+            $data->message,
+            $dateSent
+        );
+
         //Server settings
         //$mail->SMTPDebug = SMTP::DEBUG_SERVER; // Enable verbose debug output
         $mail->isSMTP(); // Send using SMTP
@@ -40,7 +59,7 @@ if (file_get_contents('php://input')) {
 
         //Recipients
 
-        $mail->setFrom($data->email, $data->name);
+        $mail->setFrom($data->email, $data->vorname);
 
         $mail->addAddress($data->toEmail); // Add a recipient
 
