@@ -31,7 +31,7 @@
 
 
 
-        <div class="col py-3 content px-4">
+        <div class="col py-3 content px-4" style="overflow: auto;">
             
 
         <?php require 'templates/kontaktformular.phtml'; ?>

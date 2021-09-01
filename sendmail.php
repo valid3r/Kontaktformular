@@ -30,18 +30,6 @@ if (file_get_contents('php://input')) {
     $dateSent = new DateTime();
 
     try {
-        // Database insert
-        $kontakt->insert(
-            $data->vorname,
-            $data->nachname,
-            // from
-            $data->email,
-            $data->toEmail,
-            $data->subject,
-            $data->message,
-            $dateSent
-        );
-
         //Server settings
         //$mail->SMTPDebug = SMTP::DEBUG_SERVER; // Enable verbose debug output
         $mail->isSMTP(); // Send using SMTP
@@ -75,6 +63,19 @@ if (file_get_contents('php://input')) {
         $mail->send();
 
         $message = ['code' => 250, 'message' => 'Message has been sent'];
+
+        // Database insert
+        $kontakt->insert(
+            $data->vorname,
+            $data->nachname,
+            // from
+            $data->email,
+            $data->toEmail,
+            $data->subject,
+            $data->message,
+            $dateSent
+        );
+
         echo json_encode($message);
     } catch (Exception $e) {
         $message = ['code' => 554, 'message' => $mail->ErrorInfo];

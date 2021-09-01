@@ -73,7 +73,6 @@ function submitData(form, e) {
 }
 
 function deleteContact(id) {
-  console.log('Inside delete')
   var request = new XMLHttpRequest()
 
   request.open('POST', 'Controller.php', true)
@@ -119,8 +118,6 @@ function deleteOlderThan2Weeks() {
 }
 
 function getContactInfo(id) {
-  console.log('getContactInfo')
-
   var request = new XMLHttpRequest()
 
   request.open('POST', 'Controller.php', true)
@@ -130,6 +127,23 @@ function getContactInfo(id) {
     'application/x-www-form-urlencoded; charset=UTF-8',
   )
 
+  const infoModal = new bootstrap.Modal(
+    document.getElementById('infoModal'),
+    {},
+  )
+
+  request.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log('Response text: ' + this.responseText)
+
+      // Append response to modal
+      document.getElementById('info-content').innerHTML = this.responseText
+
+      // Show modal
+      infoModal.show()
+    }
+  }
+
   var data = {
     action: 'getContactInfo',
     id: id,
@@ -138,9 +152,4 @@ function getContactInfo(id) {
   data = JSON.stringify(data)
 
   request.send(data)
-
-  response = request.responseText
-  console.log(response)
-
-  //window.location.href = '/emails.php'
 }
